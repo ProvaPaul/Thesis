@@ -3,11 +3,27 @@ declare(strict_types=1);
 
 session_start();
 
-const DB_HOST = '127.0.0.1';
-const DB_PORT = '3307';
-const DB_NAME = 'bangla_wsd';
-const DB_USER = 'root';
-const DB_PASS = '';
+if ($_SERVER['HTTP_HOST'] === 'localhost' || strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false) {
+    // Local XAMPP
+    $host = 'localhost';
+    $dbname = 'bangla_wsd';
+    $username = 'root';
+    $password = '';
+    $port = '3307';
+} else {
+    // InfinityFree
+    $host = 'sql202.infinityfree.com';
+    $dbname = 'if0_42255387_bangla_wsd';
+    $username = 'if0_42255387';
+    $password = 'NfBHAhimH4JmGXL';
+    $port = '3306';
+}
+
+define('DB_HOST', $host);
+define('DB_PORT', $port);
+define('DB_NAME', $dbname);
+define('DB_USER', $username);
+define('DB_PASS', $password);
 
 const DATASET_COLUMNS = [
     'word_id' => 'word_id',
