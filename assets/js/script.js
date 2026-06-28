@@ -29,17 +29,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const annotationForm = document.querySelector('form[action="submit_annotation.php"]');
   if (annotationForm) {
     document.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter' || event.shiftKey || event.ctrlKey || event.altKey || event.metaKey) {
+      if (event.shiftKey || event.ctrlKey || event.altKey || event.metaKey) {
         return;
       }
 
       const activeTag = document.activeElement?.tagName?.toLowerCase();
-      if (activeTag === 'textarea') {
+      if (activeTag === 'input' || activeTag === 'textarea') {
         return;
       }
 
-      event.preventDefault();
-      annotationForm.requestSubmit();
+      if (['1', '2', '3', '4'].includes(event.key)) {
+        const option = annotationForm.querySelectorAll('input[name="selected_sense"]')[Number(event.key) - 1];
+        if (option) {
+          event.preventDefault();
+          option.checked = true;
+          option.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        return;
+      }
+
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        annotationForm.requestSubmit();
+      }
     });
   }
 });

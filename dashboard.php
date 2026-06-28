@@ -51,6 +51,8 @@ if ($q !== '') {
       <a class="nav-link active" href="dashboard.php">Dashboard</a>
       <a class="nav-link" href="import_dataset.php">Import Dataset</a>
       <a class="nav-link" href="export_csv.php">Export CSV</a>
+      <a class="nav-link" href="evaluation.php">Evaluation</a>
+      <a class="nav-link" href="user_details.php">User Details</a>
       <a class="nav-link" href="logout.php">Logout</a>
     </nav>
   </aside>

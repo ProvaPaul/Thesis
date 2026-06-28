@@ -1,0 +1,26 @@
+====================================================================
+  🎓 THESIS RESULTS SUMMARY — BANGLA WSD
+====================================================================
+
+  Research Question 1: Which model is best for Bangla WSD?
+    → BanglaBERT: 86.60% F1  (BEST)
+    → mBERT:      80.00% F1
+    → XLM-R:      0.00% F1
+    → MFS:        0.08% F1  (baseline)
+
+  Research Question 2: Does cross-lingual transfer help?
+    → Exp B (EN→BN): 0.00% F1
+    → Exp C (BN):    82.33% F1
+    → Transfer gain: -82.33% F1  (NEGATIVE TRANSFER (needs verification))
+
+  Key Contributions:
+  1. New annotated Bangla WSD dataset
+  2. Word-specific label space (fixes global sense_id collision)
+  3. [TGT] marker-based BERT fine-tuning for Bangla
+  4. Systematic 4-model benchmark on Bangla WSD
+  5. First formal cross-lingual transfer study for Bangla WSD
+  6. Language-specific > multilingual for low-resource WSD
+
+  ⚠️  Before thesis submission: run 3-5 seeds for RQ2 and
+     report mean ± std. Apply McNemar test for significance.
+====================================================================

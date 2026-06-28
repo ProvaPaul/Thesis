@@ -6,7 +6,7 @@ session_start();
 if ($_SERVER['HTTP_HOST'] === 'localhost' || strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false) {
     // Local XAMPP
     $host = 'localhost';
-    $dbname = 'bangla_wsd';
+    $dbname = 'wsd_bangla';
     $username = 'root';
     $password = '';
     $port = '3307';
