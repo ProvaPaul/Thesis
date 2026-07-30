@@ -1,33 +1,68 @@
-# Bangla WSD — Annotation Platform & Research Benchmark
+# Bangla WSD — Annotation Platform, Research Benchmark & Thesis
 
-A two-part **Bangla Word Sense Disambiguation (WSD)** project:
+A three-part **Bangla Word Sense Disambiguation (WSD)** project, developed as a thesis at the Dept. of Computer Science and Engineering, Khulna University of Engineering & Technology (KUET):
 
-1. **Annotation Platform** — a PHP/MySQL web application for importing sense-tagged datasets, managing annotator accounts, collecting per-annotator sense labels, and computing inter-annotator agreement (Cohen's κ).
-2. **Research Benchmark** — a 44-experiment Python/PyTorch study comparing 6 embedding strategies × 7 classifiers plus 2 end-to-end fine-tuned transformers, packaged with a live **Gradio demo app** for interactive sense prediction.
+1. **Annotation Platform** — a PHP/MySQL web application for importing sense-tagged datasets, managing annotator accounts, collecting per-annotator sense labels, and computing inter-annotator agreement (Cohen's κ). Used to build the corpus described below.
+2. **Research Benchmark** — a large-scale Python/PyTorch study comparing lexical, static-embedding, and transformer representations across classical, recurrent, and fine-tuned classifiers, packaged with a live **Gradio demo app** for interactive sense prediction.
+3. **Thesis Paper** — *"Bangla Word Sense Disambiguation: A Large-Scale Benchmark of Embedding and Classifier Combinations"*, the written academic report of the final, published benchmark configuration.
+
+> **Authors:** Prova Rani Paul, Dr. K. M. Azharul Hasan
+> **Affiliation:** Dept. of Computer Science and Engineering, Khulna University of Engineering & Technology (KUET), Khulna, Bangladesh
+> **Contact:** provapaul123@gmail.com
+
+> **⚠️ A note on numbers in this repo.** The repository contains two related but distinct experimental snapshots:
+> - The **thesis paper** reports the *final, published* benchmark: 12,059 sentences, 402 target words, 1,048 word–sense classes, and **29 experiments** (best result: fine-tuned BanglaBERT at **89.72%** accuracy).
+> - The **shipped notebook and Gradio demo app** in `final/` reflect an *earlier/working* experimental configuration over a smaller filtered subset: 7,409 sentences, 181 target words, 657 word-sense classes, and **44 experiments** (best result: fine-tuned BanglaBERT at **87.45%** accuracy).
+>
+> Both are kept in this README, clearly labeled, rather than merged into one set of numbers — treat the **paper's numbers as the citable, official results**, and the **notebook/demo's numbers as what you'll actually see if you run the code in this repo today**.
 
 ---
 
 ## 📑 Table of Contents
 
-1. [Features](#-features)
-2. [Tech Stack](#-tech-stack)
-3. [Project Structure](#-project-structure)
-4. [Database Schema](#-database-schema)
-5. [Getting Started — Annotation Platform](#-getting-started--annotation-platform)
-6. [Admin Workflow](#-admin-workflow)
-7. [Annotator Workflow](#-annotator-workflow)
-8. [Evaluation Dashboard](#-evaluation-dashboard)
-9. [User Details](#-user-details)
-10. [Exporting Annotations](#-exporting-annotations)
-11. [Python Evaluation Engine (`kappa.py`)](#-python-evaluation-engine-kappapy)
-12. [Research Benchmark (44 Experiments)](#-research-benchmark-44-experiments)
-13. [Live Demo App (Gradio)](#-live-demo-app-gradio)
-14. [Helper Functions in `config.php`](#-helper-functions-in-configphp)
-15. [Security Checklist](#-security-checklist)
-16. [Deployment Notes](#-deployment-notes)
-17. [Troubleshooting](#-troubleshooting)
-18. [Related Artifacts](#-related-artifacts)
-19. [License](#-license)
+1. [Motivation](#-motivation)
+2. [Features](#-features)
+3. [Tech Stack](#-tech-stack)
+4. [Project Structure](#-project-structure)
+5. [Database Schema](#-database-schema)
+6. [Getting Started — Annotation Platform](#-getting-started--annotation-platform)
+7. [Admin Workflow](#-admin-workflow)
+8. [Annotator Workflow](#-annotator-workflow)
+9. [Evaluation Dashboard](#-evaluation-dashboard)
+10. [User Details](#-user-details)
+11. [Exporting Annotations](#-exporting-annotations)
+12. [Python Evaluation Engine (`kappa.py`)](#-python-evaluation-engine-kappapy)
+13. [The Corpus](#-the-corpus)
+14. [Research Benchmark — Methodology](#-research-benchmark--methodology)
+15. [Results — Thesis Paper (Official, 29 Experiments)](#-results--thesis-paper-official-29-experiments)
+16. [Results — Shipped Notebook (44 Experiments)](#-results--shipped-notebook-44-experiments)
+17. [Key Findings](#-key-findings)
+18. [Comparison with Prior Bangla WSD Work](#-comparison-with-prior-bangla-wsd-work)
+19. [Live Demo App (Gradio)](#-live-demo-app-gradio)
+20. [Limitations](#-limitations)
+21. [Future Work](#-future-work)
+22. [Helper Functions in `config.php`](#-helper-functions-in-configphp)
+23. [Security Checklist](#-security-checklist)
+24. [Deployment Notes](#-deployment-notes)
+25. [Troubleshooting](#-troubleshooting)
+26. [Related Artifacts](#-related-artifacts)
+27. [Citation](#-citation)
+28. [Acknowledgments](#-acknowledgments)
+29. [License](#-license)
+30. [Contact](#-contact)
+
+---
+
+## 🎯 Motivation
+
+Word Sense Disambiguation is the task of selecting the correct sense of an ambiguous word given its context. Bangla, spoken by roughly 300 million people, is rich in polysemy (e.g. জল / *jal* can mean water, rain, tears, or exhausting toil), but prior Bangla WSD research relied on small, private datasets and hand-engineered features — no study had fine-tuned a language model for this task before this work. The five prior published studies evaluate on between 160 and 3,860 sentences, none uses a learned embedding, none fine-tunes a transformer, and none reports inter-annotator reliability.
+
+This project closes those gaps with:
+
+- **A custom-built annotation platform** (this repo) to collect reliable, reliability-checked sense labels at scale.
+- **A new large-scale, human-annotated Bangla WSD corpus** — up to 12,059 sentences covering 402 ambiguous target words with 1,085 distinct sense glosses, the largest Bangla WSD corpus reported to date and the only one with quantified inter-annotator reliability (Cohen's κ = 0.836 / 0.874, "almost perfect").
+- **A controlled, large-scale benchmark** — from lexical baselines to fully fine-tuned transformers, sharing one fixed data split, one preprocessing pipeline, and one evaluation suite.
+- **An interactive demo app** to make the trained models tangible and testable.
 
 ---
 
@@ -47,7 +82,7 @@ A two-part **Bangla Word Sense Disambiguation (WSD)** project:
   - FULLTEXT-backed dataset search.
 - **Excel dataset import** (`import_dataset.php`, `.xlsx`) via `PhpSpreadsheet` with **SHA-256 duplicate detection** (column order-independent).
 - **CSV export** (`export_csv.php`) aligned by sentence for every registered annotator (UTF-8 with BOM, Excel-friendly).
-- **Evaluation dashboard** (`evaluation.php`) — see [below](#-evaluation-dashboard).
+- **Evaluation dashboard** (`evaluation.php`) — computes Cohen's κ between annotator pairs; see [below](#-evaluation-dashboard).
 - **User Details** (`user_details.php`) — see [below](#-user-details).
 
 ### Annotation
@@ -62,17 +97,20 @@ A two-part **Bangla Word Sense Disambiguation (WSD)** project:
 - **No frontend build step** — vanilla JS + Bootstrap 5 CDN.
 
 ### Research Benchmark (`final/bangla-wsd-final.ipynb`)
-- **44 fully automated experiments**: 6 embeddings (TF-IDF, Word2Vec, fastText, BERT, mBERT, BanglaBERT) × 7 classifiers (Naive Bayes, Logistic Regression, Linear SVM, LSTM, GRU, BiLSTM, BiGRU) + 2 end-to-end fine-tuned transformers (mBERT, BanglaBERT).
+- Fully automated experiment grid across embeddings (TF-IDF, Word2Vec, fastText, frozen mBERT/XLM-R/BanglaBERT) and classifiers (Naive Bayes, Logistic Regression, Linear SVM, LSTM, GRU, BiLSTM, BiGRU) plus end-to-end fine-tuned transformers (mBERT, XLM-R, BanglaBERT).
 - **Word-specific label construction** so the same gloss text is never confused across different target words.
 - **Stratified 70/15/15 train/validation/test split** with disk-cached embeddings to avoid recomputation.
 - **Full metrics suite per experiment**: accuracy, macro/weighted precision-recall-F1, balanced accuracy, MCC, Cohen's κ, ROC-AUC, training/inference timing, parameter counts, model size, GPU/CPU memory.
+- **Target-word-constrained evaluation** — an inference-time restriction of predictions to a word's own valid senses, isolating cross-word errors from true within-word sense confusions.
 - **Publication-ready exports**: styled comparison table, bar charts, an all-metrics heatmap, and results in CSV/Excel/Markdown/LaTeX/Word formats.
 
 ### Live Demo App (`final/wsd_demo_app/`)
-- **Gradio web UI** for side-by-side, real-time inference with the two fine-tuned transformer models.
+- **Gradio web UI** for side-by-side, real-time inference with the fine-tuned transformer models.
 - **Confidence charts + top-5 sense breakdown** per model, plus one-click example inputs pulled from the real dataset.
 - **Sense-restricted softmax** — predictions are limited to the target word's own valid senses, mirroring the training notebook exactly.
-- **Full 44-experiment benchmark table & chart** available in-app for context (Benchmark Results tab).
+- **Full benchmark table & chart** available in-app for context (Benchmark Results tab).
+
+---
 
 ## 🧱 Tech Stack
 
@@ -86,8 +124,10 @@ A two-part **Bangla Word Sense Disambiguation (WSD)** project:
 | Inter-process | `shell_exec` from PHP → Python subprocess | Run evaluation |
 | Auth | PHP sessions + `password_hash` (bcrypt) | Login / role gating |
 | Hosting | XAMPP (development) and InfinityFree (production) | `config.php` auto-switches via `HTTP_HOST` |
-| ML research | **PyTorch**, `transformers` (HuggingFace), `scikit-learn`, `gensim`-style Word2Vec/fastText | Embedding + classifier benchmark |
+| ML research | **PyTorch**, `transformers` (HuggingFace), `scikit-learn`, Word2Vec/fastText | Embedding + classifier benchmark |
 | Live demo | **Gradio 4.x**, `matplotlib` | Interactive inference UI |
+
+---
 
 ## 📁 Project Structure
 
@@ -115,7 +155,7 @@ A two-part **Bangla Word Sense Disambiguation (WSD)** project:
 │   ├── css/style.css
 │   └── js/script.js
 └── final/                            # Research benchmark, trained artifacts, and live demo
-    ├── bangla-wsd-final.ipynb        # Main 44-experiment benchmark notebook (19-step pipeline)
+    ├── bangla-wsd-final.ipynb        # Main benchmark notebook (19-step pipeline)
     ├── bangla-wsd(with testing).ipynb# Variant of the above with extended manual test/inspection cells
     ├── banglabert1.ipynb             # Early single-model exploration notebook
     ├── kappa/
@@ -134,6 +174,8 @@ A two-part **Bangla Word Sense Disambiguation (WSD)** project:
     ├── testing.pdf                           # Manual testing log / report
     └── wsd_random_test_report.pdf            # Random-sample test report
 ```
+
+---
 
 ## 🗃️ Database Schema
 
@@ -185,6 +227,8 @@ The importer expects the following columns (order-independent):
 | `sense_id` | optional | Sense identifier |
 | `sense_gloss` | **required** | Gloss / definition for this sense |
 | `text` | **required** | The full sentence containing the target word |
+
+---
 
 ## 🚀 Getting Started — Annotation Platform
 
@@ -264,6 +308,8 @@ pip install pandas scikit-learn
 
 `calculate_metrics.php` will probe for `python`, `python3`, or `py` and surface a friendly error if Python is missing or the dependencies aren't installed.
 
+---
+
 ## 🧑‍💼 Admin Workflow
 
 After signing in as an admin, the sidebar exposes four tools:
@@ -284,6 +330,8 @@ Typical end-to-end flow:
 4. Once at least two annotators have labelled a shared subset, open **Evaluation** and click **Calculate Metrics** to see Cohen's κ per pair and the overall average.
 5. **Export** the CSV when you're ready to train a model offline.
 
+---
+
 ## 🧑‍🏫 Annotator Workflow
 
 1. Annotator logs in → lands on `annotation.php`.
@@ -294,6 +342,8 @@ Typical end-to-end flow:
 6. When all sentences are labeled, the UI shows the completion screen.
 
 Progress (`Completed X / Y`) is shown in the top bar at all times.
+
+---
 
 ## 📤 Exporting Annotations
 
@@ -307,6 +357,8 @@ sentence_id, target_word, sentence, <annotator_1>, <annotator_2>, ...
 - UTF-8 with **BOM** so it opens cleanly in Excel.
 - Rows are aligned by `sentence_id`; missing labels are blank cells (not `NaN`).
 - The Evaluation Dashboard (`evaluation.php`) builds the **same shape in memory** and pipes it to `kappa.py` — you can re-run evaluation offline by exporting and feeding the file directly to `kappa.py --csv path/to/file.csv`.
+
+---
 
 ## 🐍 Python Evaluation Engine (`final/kappa/kappa.py`)
 
@@ -357,6 +409,8 @@ python final/kappa/kappa.py
 - `n_compared` reflects the number of sentences both annotators labelled (the intersection).
 - Sentences where **either** annotator left a blank cell are dropped from that pairwise comparison.
 
+---
+
 ## 📊 Evaluation Dashboard
 
 `evaluation.php` is an admin-only page that runs `kappa.py` over the live database and renders the result with Bootstrap cards, a per-annotator table, progress bars, and color-coded agreement pills.
@@ -393,6 +447,8 @@ python final/kappa/kappa.py
 
 The page is robust on hosted environments: if `shell_exec` is disabled or Python is missing, the UI shows actionable guidance instead of breaking.
 
+---
+
 ## 👤 User Details
 
 `user_details.php` is an admin-only browser for annotators. Two views:
@@ -424,9 +480,118 @@ Three cards:
 
 The list view runs a single grouped SQL aggregation against `annotations` (no N+1); the detail view runs one extra query per user (the JOIN for the last 20 rows).
 
-## 🧪 Research Benchmark (44 Experiments)
+---
 
-`final/bangla-wsd-final.ipynb` is a self-contained, 19-step Kaggle/Jupyter notebook that trains and evaluates **44 embedding × classifier combinations plus 2 fine-tuned transformers** on the annotated dataset, producing a full academic comparison table and every plot/artifact needed for a thesis writeup.
+## 📖 The Corpus
+
+The dataset produced by the annotation platform, in its final published form:
+
+- **12,059 sentences**, 402 unique ambiguous target words, 1,085 distinct sense glosses
+- First 100 target words adopted from the public [Das Dawn et al. Bengali WSD dataset](https://www.kaggle.com/datasets/debapratimdasdawn/bengali-wsd-dataset); the remaining 302 words and all sentences/annotations are newly contributed
+- Senses validated against the *Sansad Bangla Abhidhan* dictionary
+- Two independent annotators labeled every sentence on this platform (sentence deduplication by SHA-256, randomized sense ordering to reduce positional bias, one-label-per-sentence-per-annotator database constraint)
+- **Inter-annotator reliability:** Cohen's κ = 0.836 and 0.874 (both "almost perfect" on the Landis–Koch scale) — the first reliability statistic ever reported for a Bangla WSD dataset
+- After preprocessing, word-specific label construction (to eliminate cross-word sense-label collisions), and rare-class filtering: **11,151 sentences, 373 target words, 1,048 word–sense classes**
+- Fixed **70/15/15** stratified train/validation/test split (seed 42), reused identically across every experiment in the paper: 7,805 / 1,673 / 1,673 sentences
+
+### Corpus schema
+
+Each row contains: `word_id`, `target_word`, `sense_id`, `sense_gloss`, `text`
+
+| word_id | target_word | sense_id | sense_gloss | text |
+|---|---|---|---|---|
+| 114 | রূপ | 1 | আকৃতি (shape) | মেঘের রূপ ক্রমশ বদলে গিয়ে ঝড়ের আভাস দিচ্ছিল। |
+| 114 | রূপ | 2 | সৌন্দর্য (beauty) | তার রূপ দেখে কবিরা অনেক কবিতা লিখেছেন। |
+| 114 | রূপ | 3 | অবস্থা (state) | দেশের বর্তমান রূপ দেখে অনেকেই হতাশ। |
+
+> The shipped notebook/demo in `final/` trains on a smaller, filtered subset of this corpus (7,409 sentences, 181 target words, 657 word-sense classes after dropping rare senses with fewer than 3 samples) — see [Results — Shipped Notebook](#-results--shipped-notebook-44-experiments).
+
+---
+
+## 🧪 Research Benchmark — Methodology
+
+### Text representations
+1. **TF-IDF** — word-level 1–2 grams, 30,000 max features, sublinear TF, fit on train split only
+2. **Pretrained static embeddings** — Bangla Word2Vec (100-D) and Bengali fastText (300-D, `wiki.bn`), combined into target-aware features: `[left-context mean; target-word vector; right-context mean]` with a 5-word window (rather than a whole-sentence mean, which would dilute the disambiguation signal)
+3. **Frozen transformer embeddings** — mBERT, BanglaBERT, XLM-R; `[CLS]` vector concatenated with mean hidden state over the `[TGT]`-marked target span (1,536-D), no gradient updates to the backbone
+
+### Classifiers and sequence models
+- **Classical classifiers**: Naive Bayes, Logistic Regression, Linear SVM over every representation, with features standardized for the latter two
+- **Recurrent architectures**: LSTM, GRU, BiLSTM, BiGRU applied only to Word2Vec and fastText (the two representations with real per-token sequence structure — feeding a recurrent network a single pooled vector isn't sequence modeling), hidden size 128, batch size 32, learning rate 1e-3, up to 30 epochs with early stopping (patience 5), sequences padded/truncated to 20 tokens
+
+### Transformer fine-tuning
+End-to-end fine-tuning of mBERT, BanglaBERT, and XLM-R on marked text (`[TGT] word [/TGT]`, registered as special tokenizer tokens so they stay atomic), with a shared classification head (LayerNorm → Dropout 0.3 → Linear 768×768 → GELU → Dropout 0.3 → Linear 768×num_classes), AdamW (weight decay 0.01) with discriminative learning rates (head at 10× the backbone rate), linear warm-up, class-balanced cross-entropy, gradient clipping at 1.0, bfloat16 mixed precision, batch size 16, max sequence length 128, up to 15 epochs with early stopping, best-validation-accuracy checkpoint restored before final test evaluation. mBERT/BanglaBERT use backbone rate 2e-5 with 10% warm-up; XLM-R needed a gentler 1e-5 with 20% warm-up after collapsing under the shared recipe. Trained on a Tesla T4 GPU (15.6 GB).
+
+### Evaluation protocol
+Every model is scored with accuracy, macro/weighted precision-recall-F1, balanced accuracy, MCC, and Cohen's kappa, under two regimes:
+- **Global evaluation** — over the full word-sense label space
+- **Target-word-constrained evaluation** — an inference-time-only restriction of predictions to the known target word's own candidate senses (the realistic deployment setting), which separates cross-word errors from true within-word sense confusions:
+
+  ŷᵢᶜ = argmax₍k ∈ L(wᵢ)₎ sᵢₖ
+
+  where `sᵢₖ` is the model's native score for class *k* on sentence *i*, and `L(wᵢ)` is the set of label indices belonging to target word `wᵢ`. The same trained model and score matrix are reused — no per-word classifier is ever trained.
+
+---
+
+## 📈 Results — Thesis Paper (Official, 29 Experiments)
+
+Held-out test split: 1,673 sentences, global evaluation over all 1,048 classes. All values in %, except MCC.
+
+| Embedding | Classifier | Accuracy | Macro F1 | Weighted F1 | MCC |
+|---|---|---|---|---|---|
+| TF-IDF | Naive Bayes | 14.23 | 8.85 | 12.96 | 0.157 |
+| TF-IDF | Logistic Regression | 63.72 | 51.53 | 61.01 | 0.637 |
+| TF-IDF | Linear SVM | 66.35 | 54.19 | 64.56 | 0.663 |
+| Word2Vec | Naive Bayes | 61.09 | 49.46 | 59.08 | 0.611 |
+| Word2Vec | Logistic Regression | 74.48 | 62.34 | 73.15 | 0.745 |
+| Word2Vec | Linear SVM | 63.42 | 51.04 | 60.63 | 0.634 |
+| Word2Vec | LSTM | 13.27 | 9.33 | 12.09 | 0.132 |
+| Word2Vec | GRU | 29.05 | 20.53 | 26.65 | 0.290 |
+| Word2Vec | BiLSTM | 58.46 | 46.12 | 55.67 | 0.584 |
+| Word2Vec | BiGRU | 60.67 | 47.73 | 57.65 | 0.606 |
+| fastText | Naive Bayes | 61.92 | 50.36 | 59.84 | 0.619 |
+| fastText | Logistic Regression | 85.06 | 71.42 | 83.61 | 0.850 |
+| fastText | Linear SVM | 79.74 | 66.30 | 78.26 | 0.797 |
+| fastText | LSTM | 25.40 | 17.80 | 22.71 | 0.253 |
+| fastText | GRU | 53.56 | 42.05 | 51.13 | 0.535 |
+| fastText | BiLSTM | 70.23 | 57.35 | 68.05 | 0.702 |
+| fastText | BiGRU | 71.49 | 58.67 | 69.47 | 0.715 |
+| mBERT (frozen) | Naive Bayes | 75.85 | 63.54 | 74.65 | 0.758 |
+| mBERT (frozen) | Logistic Regression | 79.74 | 67.42 | 78.37 | 0.797 |
+| mBERT (frozen) | Linear SVM | 75.49 | 62.86 | 73.45 | 0.755 |
+| XLM-R (frozen) | Naive Bayes | 85.89 | 72.00 | 84.66 | 0.859 |
+| XLM-R (frozen) | Logistic Regression | 86.55 | 73.68 | 85.75 | 0.865 |
+| XLM-R (frozen) | Linear SVM | 85.77 | 72.15 | 84.55 | 0.858 |
+| BanglaBERT (frozen) | Naive Bayes | 85.59 | 72.52 | 85.05 | 0.856 |
+| BanglaBERT (frozen) | Logistic Regression | 89.30 | 76.04 | 88.61 | 0.893 |
+| BanglaBERT (frozen) | Linear SVM | 88.22 | 75.11 | 87.43 | 0.882 |
+| mBERT | Fine-tuned | 84.16 | 71.68 | 83.59 | 0.841 |
+| XLM-R | Fine-tuned | 86.01 | 73.05 | 85.02 | 0.860 |
+| **BanglaBERT** | **Fine-tuned** | **89.72** | **76.42** | **88.97** | **0.897** |
+
+### Target-word-constrained evaluation (selected models)
+
+| Model | Global | Constrained | Gain |
+|---|---|---|---|
+| TF-IDF + Naive Bayes | 14.23 | 72.44 | +58.21 |
+| Word2Vec + LSTM | 13.27 | 62.94 | +49.67 |
+| Word2Vec + BiLSTM | 58.46 | 78.54 | +20.08 |
+| TF-IDF + Linear SVM | 66.35 | 72.38 | +6.03 |
+| Word2Vec + Log. Regr. | 74.48 | 80.10 | +5.62 |
+| fastText + Log. Regr. | 85.06 | 85.30 | +0.24 |
+| XLM-R (frozen) + Log. Regr. | 86.55 | 87.39 | +0.84 |
+| BanglaBERT (frozen) + Log. Regr. | 89.30 | 89.54 | +0.24 |
+| mBERT fine-tuned | 84.16 | 84.16 | 0.00 |
+| XLM-R fine-tuned | 86.01 | 86.07 | +0.06 |
+| **BanglaBERT fine-tuned** | 89.72 | 89.78 | +0.06 |
+
+The constraint transforms weak models by removing cross-word errors for free, but barely moves the strongest models — showing their remaining errors are almost entirely **within-word sense confusions**, not word misidentification.
+
+---
+
+## 📊 Results — Shipped Notebook (44 Experiments)
+
+`final/bangla-wsd-final.ipynb` is a self-contained, 19-step Kaggle/Jupyter notebook that trains and evaluates its own experiment grid on a filtered subset of the corpus (7,409 annotated sentences · 181 target words · 657 unique word-sense classes after dropping rare senses with <3 samples), producing a full comparison table and every plot/artifact needed for a writeup.
 
 ### Pipeline overview
 
@@ -439,7 +604,7 @@ The list view runs a single grouped SQL aggregation against `annotations` (no N+
 | 7 | Insert `[TGT] ... [/TGT]` markers around the target word (used by the fine-tuning stage) |
 | 8 | Stratified **70/15/15** train/validation/test split |
 | 9 | Shared utilities — metrics, timing, memory profiling, results-table builder used by every experiment |
-| 10–11 | Tokenization + **embedding generation with disk caching** for all 6 embedding types: TF-IDF, Word2Vec (trained on the train split only), fastText, and frozen-CLS BERT / mBERT / BanglaBERT |
+| 10–11 | Tokenization + **embedding generation with disk caching** for all embedding types: TF-IDF, Word2Vec (trained on the train split only), fastText, and frozen-CLS BERT / mBERT / BanglaBERT |
 | 12 | Embedding registry — single dict driving the automated experiment loop |
 | 13 | Classical ML models — Naive Bayes, Logistic Regression, Linear SVM |
 | 14 | Sequence deep-learning models — LSTM, GRU, BiLSTM, BiGRU (one generic configurable PyTorch module) |
@@ -460,17 +625,13 @@ The list view runs a single grouped SQL aggregation against `annotations` (no N+
 | TF-IDF | BiGRU | 46.03% | 42.09% | 97.54% |
 | … | … (39 more rows) | … | … | … |
 
-Key takeaways: fine-tuned transformers massively outperform every classical embedding + classifier combination; BanglaBERT (Bangla-specific pre-training) beats multilingual BERT by ~5 accuracy points; the best classical baseline (TF-IDF + LinearSVM) trails BanglaBERT-FineTuned by ~30 points.
-
-### Dataset
-
-7,409 annotated Bangla sentences · 181 target words · 650+ unique word-sense classes (after dropping rare senses with <3 samples) · stratified 70/15/15 split.
+Fine-tuned transformers massively outperform every classical embedding + classifier combination on this subset; BanglaBERT (Bangla-specific pre-training) beats multilingual BERT by ~5 accuracy points; the best classical baseline (TF-IDF + LinearSVM) trails BanglaBERT-FineTuned by ~30 points — consistent with the paper's overall conclusions even though the exact figures differ due to the smaller label space.
 
 ### Output artifacts
 
 | Folder | Contents |
 |--------|----------|
-| `final/bangla_wsd_benchmark_all_artifacts/` | Full results — `results.{csv,md,tex,xlsx,docx}`, 44 trained model files in `saved_models/` (`.pt` for PyTorch sequence/transformer models, `.pkl` for classical sklearn models), 44 `classification_reports/`, 88 `confusion_matrices/` (raw + normalized), 121 `plots/` (PR curves, ROC curves, training curves per experiment) |
+| `final/bangla_wsd_benchmark_all_artifacts/` | Full results — `results.{csv,md,tex,xlsx,docx}`, trained model files in `saved_models/` (`.pt` for PyTorch sequence/transformer models, `.pkl` for classical sklearn models), `classification_reports/`, `confusion_matrices/` (raw + normalized), `plots/` (PR curves, ROC curves, training curves per experiment) |
 | `final/artifacts_without_model/` | Identical reports/plots/tables **without** the model weight files — a lightweight copy for sharing results without the multi-GB checkpoints |
 | `final/prev/` | Superseded notebook and dataset versions kept for historical reference (`notebook1.ipynb`, `notebook2.ipynb`, `banglabert.ipynb`, and their `-fixed` variants, `dataset.xlsx`) |
 | `final/models/` | Scratch space for miscellaneous saved model files |
@@ -491,9 +652,40 @@ python peek_nb.py final/bangla-wsd-final.ipynb
 # prints: cell index, cell type, and a truncated source preview for every cell
 ```
 
+---
+
+## 🔑 Key Findings
+
+These hold consistently across both the paper's 29-experiment run and the notebook's 44-experiment run:
+
+- **Representation quality dominates classifier choice.** Holding the classifier fixed at logistic regression (paper numbers), accuracy climbs from 63.72% (TF-IDF) to 89.30% (frozen BanglaBERT) — a 23-point spread that dwarfs any within-representation classifier difference. Bangla WSD is bottlenecked by representation, not classifier choice.
+- **Subword-aware fastText clearly outperforms word-level Word2Vec** (+10.6 points with logistic regression), consistent with Bangla's heavy inflectional morphology.
+- **Language-specific pretraining beats multilingual scale.** BanglaBERT outperforms both multilingual backbones (mBERT, XLM-R) in every configuration, frozen and fine-tuned — monolingual pretraining evidently buys more Bangla-relevant capacity than the hundredfold-larger multilingual corpora behind mBERT/XLM-R.
+- **Recurrent models underperform classical classifiers** on the same embeddings (best RNN in the paper: fastText BiGRU at 71.49% vs. 85.06% for fastText + logistic regression), likely because with only ~7.4 training sentences per class on average, sequence encoders overfit before they can exploit word order.
+- **Fine-tuning is expensive relative to its gain.** Fine-tuned BanglaBERT (89.72%) beats frozen BanglaBERT + logistic regression (89.30%) by only 0.42 points, despite fine-tuning taking ~70× longer (~64 min vs. under 1 min on a T4 GPU). For deployments without a GPU training budget, frozen BanglaBERT + a linear head is a near-optimal substitute.
+- **Optimization sensitivity across backbones.** XLM-R fine-tuning collapsed under the learning-rate recipe that worked for mBERT/BanglaBERT and required a gentler, separately-tuned schedule — a caution for benchmarks that fine-tune all backbones under one blind recipe.
+- **Target-word-constrained inference is a free win for weak models, but not for strong ones** — the strongest models' remaining errors are almost entirely within-word sense confusions, which the constraint cannot fix. A deployed system should always apply this cost-free constraint; future gains for strong models must come from better sense discrimination, not better word identification.
+
+---
+
+## 📚 Comparison with Prior Bangla WSD Work
+
+| Source | Words | Sentences/Docs | Reliability |
+|---|---|---|---|
+| Pal and Saha (2019) | 7 | 2,478 sent. | — |
+| Nazah et al. (2017) | 50 | 160 sent. | — |
+| Saha et al. (2019) | 100 | 3,860 sent. | — |
+| Kaysar and Khan (2018) | unspec. | 100–1,600 patt. | — |
+| Das Dawn et al. (2023) | 100 | 345 docs | — |
+| **This work** | **402** | **12,059 sent.** | **κ = 0.836 / 0.874** |
+
+Direct numeric comparison with prior studies is necessarily approximate, since each was evaluated on its own private dataset. The strongest previously reported Bangla WSD accuracy is 80.82% on 100 target words, with other supervised studies reporting 77.5–80% on 50–100 words. Fine-tuned BanglaBERT reaches 89.72% on a task that is harder on every axis: 373 target words, a 1,048-class label space, and three to four times more sentences than the largest prior dataset.
+
+---
+
 ## 🖥️ Live Demo App (Gradio)
 
-`final/wsd_demo_app/` is a standalone Gradio application for live-testing the two fine-tuned transformer models trained by the benchmark notebook. It only **reads** from `bangla_wsd_benchmark_all_artifacts/` and `dataset_updated.xlsx` — it never modifies the training artifacts or the PHP annotation platform.
+`final/wsd_demo_app/` is a standalone Gradio application for live-testing the fine-tuned transformer models trained by the benchmark notebook. It only **reads** from `bangla_wsd_benchmark_all_artifacts/` and `dataset_updated.xlsx` — it never modifies the training artifacts or the PHP annotation platform.
 
 ### Launch
 
@@ -503,14 +695,14 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Then open **http://127.0.0.1:7860**. First load takes ~30–60s while the two ~650MB transformer checkpoints load into memory.
+Then open **http://127.0.0.1:7860**. First load takes ~30–60s while the transformer checkpoints (~650MB each) load into memory.
 
 ### Tabs
 
 | Tab | What it shows |
 |-----|----------------|
 | **Predict** | Enter a Bangla sentence + the target word → side-by-side comparison table (predicted sense, confidence, benchmark accuracy, latency), a confidence bar chart, and a top-5 sense breakdown per model. Click any row under "Example Inputs" to auto-fill from the real dataset. A collapsible "Known Words" list shows all 181 words the models were trained on. |
-| **Benchmark Results** | The full 44-experiment table and accuracy chart from `results.csv`, for context on how the two live models compare to every other configuration tried. |
+| **Benchmark Results** | The full experiment table and accuracy chart from `results.csv`, for context on how the two live models compare to every other configuration tried. |
 | **About** | Task description, model architecture, training hyperparameters, and dataset statistics. |
 
 ### Models wired up for live inference
@@ -520,11 +712,11 @@ Then open **http://127.0.0.1:7860**. First load takes ~30–60s while the two ~6
 | BanglaBERT-FineTuned | 87.45% | 85.57% | 165M |
 | mBERT-FineTuned | 82.13% | 78.40% | 179M |
 
-Only these two are runnable in the demo — the TF-IDF vectorizer and Word2Vec/fastText embedding models used by the other 42 experiments were not exported alongside the classifier weights, so they can't process new text.
+Only these two are runnable in the demo — the TF-IDF vectorizer and Word2Vec/fastText embedding models used by the other experiments were not exported alongside the classifier weights, so they can't process new text.
 
 ### How prediction works
 
-The dataset covers only **181 target words** (657 total word-sense classes after filtering). The model is a single 657-way classifier, but each word only ever has a handful of valid senses — so the app **restricts logits to the target word's own valid sense indices before softmax**, exactly mirroring `predict_sense()` in `bangla-wsd-final.ipynb` (cell 79). Typing a word outside the known list shows a warning instead of a meaningless prediction.
+The demo's dataset covers only **181 target words** (657 total word-sense classes after filtering). The model is a single 657-way classifier, but each word only ever has a handful of valid senses — so the app **restricts logits to the target word's own valid sense indices before softmax**, exactly mirroring `predict_sense()` in `bangla-wsd-final.ipynb` (cell 79). Typing a word outside the known list shows a warning instead of a meaningless prediction.
 
 ### Demo app troubleshooting
 
@@ -533,6 +725,26 @@ The dataset covers only **181 target words** (657 total word-sense classes after
 | Slow predictions (1–2s) | Expected on CPU (no CUDA detected); fine for single-input live demos |
 | `ImportError` about TensorFlow DLLs | `app.py` sets `USE_TF=0` / `USE_FLAX=0` so `transformers` never touches TensorFlow — make sure you're running the `app.py` from this folder |
 | Gradio/FastAPI/Starlette version conflicts on install | `requirements.txt` pins known-good ranges; if `pip` still resolves a broken combo, force: `pip install "gradio>=4.40,<5.0" "huggingface-hub>=0.23.2,<1.0" "fastapi==0.115.5" "starlette==0.41.3"` |
+
+---
+
+## ⚠️ Limitations
+
+- The sense inventory follows a single dictionary and averages 10.6 sentences per sense, so rare senses remain hard (macro F1 trails weighted F1 by ~12 points for all strong models in the paper's evaluation).
+- Validation and test splits do not contain all 1,048 classes (918 and 914 present, respectively); metrics are computed over the full label set so averages are not artificially inflated.
+- Results are single-run on one fixed split by design; conclusions rest on pattern consistency across all experiments rather than repeated runs.
+- The corpus follows the lexical-sample (target-word) formulation rather than all-words WSD, since no adequately covered all-words Bangla sense inventory yet exists.
+- The demo app and shipped notebook operate on a smaller, filtered subset of the full corpus (181 words / 657 classes vs. the paper's 373 words / 1,048 classes) — see the note at the top of this README.
+
+---
+
+## 🔮 Future Work
+
+- Adding examples for rare senses to improve macro-level performance
+- Parameter-efficient fine-tuning approaches (e.g., LoRA/adapters)
+- Extending toward all-words Bangla WSD as sense-inventory coverage improves
+
+---
 
 ## 🛠️ Helper Functions (`config.php`)
 
@@ -545,6 +757,8 @@ The dataset covers only **181 target words** (657 total word-sense classes after
 | `highlight_target($text, $w)` | Wrap the target word in `<mark>` (first occurrence) |
 | `flash($type, $msg)` / `consume_flash()` | One-shot flash messages |
 
+---
+
 ## 🔐 Security Checklist
 
 - ✅ All queries use **prepared statements** (PDO with `ATTR_EMULATE_PREPARES => false`).
@@ -555,6 +769,8 @@ The dataset covers only **181 target words** (657 total word-sense classes after
 - ⚠️ `shell_exec` is used to launch Python — disable it on production if you don't need the Evaluation Dashboard (`disable_functions = shell_exec` in `php.ini`).
 - ⚠️ If you deploy to InfinityFree, rotate the credentials in `config.php` before sharing the repo.
 - ⚠️ `wsd_bangla.sql` is a **production data export** — treat it like any other credential/data artifact; do not publish it in a public repository without scrubbing personal data.
+
+---
 
 ## 🚢 Deployment Notes
 
@@ -567,6 +783,8 @@ The dataset covers only **181 target words** (657 total word-sense classes after
 - Sessions are default file-based — fine for small-scale annotation work. Switch to a DB-backed session handler before going to a multi-server setup.
 - The dev build never modifies the `dataset` table from the annotator side; only admins import into it.
 - The research notebook and Gradio demo app are **standalone Python components** — they don't need to be deployed alongside the PHP app; they only require the `final/` artifacts and `dataset_updated.xlsx`.
+
+---
 
 ## 🛠️ Troubleshooting
 
@@ -581,20 +799,52 @@ The dataset covers only **181 target words** (657 total word-sense classes after
 | Notebook `Step 4` fails to find the dataset | `dataset_updated.xlsx` not uploaded/attached | Upload it as a Kaggle Dataset or place it next to the notebook |
 | Demo app can't find `saved_models/` | Wrong working directory | Run `python app.py` from inside `final/wsd_demo_app/` so relative paths resolve to `../bangla_wsd_benchmark_all_artifacts/` |
 
+---
+
 ## 📚 Related Artifacts
 
 The `final/` directory contains the full research trail behind the platform:
 
-- **`bangla-wsd-final.ipynb`** — the canonical 44-experiment benchmark notebook (see [Research Benchmark](#-research-benchmark-44-experiments)).
+- **`bangla-wsd-final.ipynb`** — the canonical benchmark notebook (see [Results — Shipped Notebook](#-results--shipped-notebook-44-experiments)).
 - **`bangla-wsd(with testing).ipynb`** — the same pipeline with extended manual test/inspection cells.
 - **`banglabert1.ipynb`** and **`prev/`** — earlier exploration notebooks and dataset versions, kept for historical/reproducibility reference.
-- **`bangla_wsd_benchmark_all_artifacts/`** / **`artifacts_without_model/`** — full trained models, metrics, plots, and reports (see above).
+- **`bangla_wsd_benchmark_all_artifacts/`** / **`artifacts_without_model/`** — full trained models, metrics, plots, and reports.
 - **`wsd_demo_app/`** — the live Gradio demo (see [Live Demo App](#-live-demo-app-gradio)).
 - **`kappa/`** — the standalone Cohen's κ CLI tool shared with the PHP Evaluation Dashboard.
-- **`Bangla_WSD_Defense_Part1/2.pptx`**, **`testing.pdf`**, **`wsd_random_test_report.pdf`**, **`model_comparison_azhar_sir.pdf`** — thesis defense slides and testing/comparison reports.
+- **`Bangla_WSD_Defense_Part1/2.pptx`**, **`testing.pdf`**, **`wsd_random_test_report.pdf`** — thesis defense slides and testing reports.
 
 None of these are required to run the annotation platform itself — they document and support the underlying WSD research.
+
+---
+
+## 📄 Citation
+
+If you use this corpus, platform, or benchmark in your work, please cite:
+
+```bibtex
+@article{paul_bangla_wsd,
+  title   = {Bangla Word Sense Disambiguation: A Large-Scale Benchmark of Embedding and Classifier Combinations},
+  author  = {Paul, Prova Rani and Hasan, K. M. Azharul},
+  school  = {Khulna University of Engineering \& Technology},
+  note    = {Thesis}
+}
+```
+
+---
+
+## 🙏 Acknowledgments
+
+The first 100 target words in this corpus are adopted from the public [Bengali WSD dataset by Das Dawn et al.](https://www.kaggle.com/datasets/debapratimdasdawn/bengali-wsd-dataset), gratefully acknowledged as the starting point of this work.
+
+---
 
 ## 📄 License
 
 Internal thesis/research project. Add an explicit license before public distribution.
+
+---
+
+## 📬 Contact
+
+Prova Rani Paul — provapaul123@gmail.com
+Dept. of Computer Science and Engineering, KUET, Khulna, Bangladesh
