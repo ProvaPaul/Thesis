@@ -1,0 +1,73 @@
+{
+  "source_file": "wsd_dataset.xlsx",
+  "n_rows": 12059,
+  "n_cols": 5,
+  "columns": [
+    "word_id",
+    "target_word",
+    "sense_id",
+    "sense_gloss",
+    "text",
+    "_char_len",
+    "_word_len"
+  ],
+  "missing_values_total": 0,
+  "missing_values_by_column": {
+    "word_id": 0,
+    "target_word": 0,
+    "sense_id": 0,
+    "sense_gloss": 0,
+    "text": 0
+  },
+  "duplicate_full_rows_extra": 0,
+  "duplicate_text_extra": 8,
+  "unique_target_word_strings": 402,
+  "unique_word_id": 421,
+  "target_words_with_multiple_word_ids": 20,
+  "unique_sense_gloss_strings": 1085,
+  "unique_target_word_sense_gloss_pairs": 1129,
+  "unique_word_id_sense_id_pairs": 1205,
+  "senses_per_word_id": {
+    "min": 2,
+    "max": 4,
+    "mean": 2.862232779097387,
+    "median": 3.0,
+    "distribution": {
+      "2": 202,
+      "3": 75,
+      "4": 144
+    }
+  },
+  "examples_per_target_word": {
+    "min": 1,
+    "max": 120,
+    "mean": 29.997512437810947,
+    "median": 20.0
+  },
+  "examples_per_word_sense_class": {
+    "min": 9,
+    "max": 20,
+    "mean": 10.00746887966805,
+    "median": 10.0,
+    "distribution_of_class_sizes": {
+      "9": 1,
+      "10": 1203,
+      "20": 1
+    }
+  },
+  "rows_target_word_not_in_text": 874,
+  "sentence_length_tokens": {
+    "min": 3,
+    "max": 28,
+    "mean": 8.76722779666639,
+    "median": 7.0,
+    "std": 4.199906091973186
+  },
+  "sentence_length_chars": {
+    "min": 13,
+    "max": 165,
+    "mean": 54.058960112778834,
+    "median": 45.0,
+    "std": 27.674543085553903
+  }
+}

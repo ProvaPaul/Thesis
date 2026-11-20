@@ -1,0 +1,141 @@
+163654
+--- 337
+(Bangla) script support via fontspec.) %% %% ============================================================ %%  KUET – CSE 4000: Thesis/Project – LaTeX Source %%  Student  : [Student Name]      Roll : [Student ID] %%  Title    : Bangla Word Sense Disambiguation: A Large-Scale Benchmark of Embedding and Cla
+--- 2183
+ that only fills ~half a page get stranded alone on a mostly-blank %   "float page" whenever several figures/tables cluster close together %   in the source (e.g. Section 3.2's Table 3.1 / Figure 3.2 / Figure 3.3 / %   Table 3.2 run). Raising these thresholds makes LaTeX try harder to %   share a page be
+--- 20119
+nteractive Gradio web application for real-time Bangla sense disambiguation. This thesis thereby contributes a reusable, human-validated Bangla WSD resource and, so far as the reviewed literature shows, the first systematic comparison of classical, deep-learning, and transformer-based approaches to Bangl
+--- 25626
+uence deep learning, or transformer fine-tuning under shared conditions.\par  A further problem, cross-word label collision, arises directly from the source data: the raw sense\_id (1-4) is reused across unrelated words, so \bn{বর্ণ} ("colour") and \bn{হাত} ("body part") can share sense\_id = 1, forcing 
+--- 30080
+sis} {\fontsize{12}{18}\selectfont\normalfont\setstretch{1.5}\justifying\sloppy\emergencystretch=3em This research used almost entirely free and open-source software and free-tier cloud compute, keeping direct monetary cost low. Table 1.1 itemises the estimated resource cost in Bangladeshi Taka (BDT).\pa
+--- 30194
+ used almost entirely free and open-source software and free-tier cloud compute, keeping direct monetary cost low. Table 1.1 itemises the estimated resource cost in Bangladeshi Taka (BDT).\par  } \begin{table}[htbp] \caption{Estimated project resource and cost breakdown.} \label{tab:auto1} \centering {\f
+--- 30289
+ monetary cost low. Table 1.1 itemises the estimated resource cost in Bangladeshi Taka (BDT).\par  } \begin{table}[htbp] \caption{Estimated project resource and cost breakdown.} \label{tab:auto1} \centering {\fontsize{10}{14}\selectfont \begin{tabular}{@{}p{2.60cm} p{3.75cm} p{3.75cm} p{3.75cm}@{}} \topr
+--- 30862
+ T4) & 0 & 29 experiments incl.\ transformer fine-tuning \\ \addlinespace[3pt] Software & Python, PyTorch, HuggingFace, PHP, MySQL, Gradio & 0 & Open-source \\ \addlinespace[3pt] Human Resources & Annotator honorarium (2 annotators) & 6,000 & Token compensation \\ \addlinespace[3pt] Reporting & Printing,
+--- 30899
+sformer fine-tuning \\ \addlinespace[3pt] Software & Python, PyTorch, HuggingFace, PHP, MySQL, Gradio & 0 & Open-source \\ \addlinespace[3pt] Human Resources & Annotator honorarium (2 annotators) & 6,000 & Token compensation \\ \addlinespace[3pt] Reporting & Printing, binding, presentation materials & 2,
+--- 37619
+latform, and trained models have direct applications:\par  \begin{enumerate}[leftmargin=*, itemsep=4pt]   \item Machine Translation: disambiguating a source word's sense before selecting its target-language equivalent.   \item Information Retrieval: disambiguating query and document terms to reduce retri
+--- 38251
+senses with opposite affective connotations, so sense resolution can reduce polarity error.   \item Education: the sense-tagged corpus with authentic example sentences can serve as Bangla vocabulary teaching material.   \item Spell/Usage Correction: flagging a word used in a context inconsistent with any of its kno
+--- 40702
+alfont\setstretch{1.5}\justifying\sloppy\emergencystretch=3em This chapter introduced Bangla WSD, argued that Bangla's morphological complexity and resource scarcity make it harder than English WSD, and identified four deficiencies in prior work, namely the lack of a benchmark corpus, of any reliability 
+--- 41966
+.2-2.6 review the main method families; Sections 2.7-2.9 critically analyse the five Bangla WSD studies obtainable for this review and the language resources they depend on; Section 2.10 synthesises a research-gap analysis mapping each limitation to a contribution of this thesis.\par  } \section{Word Sen
+--- 43471
+etstretch{1.5}\justifying\sloppy\emergencystretch=3em Knowledge-based WSD disambiguates a word by comparing its context against an external lexical resource rather than learning from labelled examples. The classic Lesk algorithm selects the sense whose dictionary gloss maximises word overlap with the sur
+--- 44863
+t al. report 80.82\% combining Levenshtein distance with cosine similarity; Das Dawn et al. report \textasciitilde{}80\% with Random Forest over four novel composite feature sets; and Kaysar and Khan apply Apriori association-rule mining, reporting pattern-match counts rather than accuracy. Two weaknesse
+--- 44869
+report 80.82\% combining Levenshtein distance with cosine similarity; Das Dawn et al. report \textasciitilde{}80\% with Random Forest over four novel composite feature sets; and Kaysar and Khan apply Apriori association-rule mining, reporting pattern-match counts rather than accuracy. Two weaknesses recur
+--- 45878
+m Bangla WSD: none of the five studies reviewed employs Word2Vec, fastText, or any recurrent architecture, a direct consequence of Bangla embedding resources only recently becoming widely available. The benchmark built for this thesis closes this gap by training Word2Vec and fastText on the corpus itself
+--- 52471
+Khan, Shaikh, and Pal (2023)}  Releases the only publicly downloadable Bangla WSD dataset reviewed here (100 words, 345 documents), and proposes four composite hand-engineered feature sets (CIM, BCF, SEF, PCF) evaluated with Bayesian Network, K-star, and Random Forest under 10-fold cross-validation. Rando
+--- 53087
+l} \\ \midrule Dataset & Public Kaggle dataset: 100 words, 345 documents (3-4 senses/word) \\ \addlinespace[3pt] Method / Embedding & CIM/BCF/SEF/PCF composite features; no learned embedding \\ \addlinespace[3pt] Transformer used & No \\ \addlinespace[3pt] Accuracy & \textasciitilde{}80\% (Random Forest, 
+--- 53974
+earned embedding, only one dataset is public, and none reports Cohen's Kappa or a comparable reliability statistic.\par  } \section{Bangla language resources} {\fontsize{12}{18}\selectfont\normalfont\setstretch{1.5}\justifying\sloppy\emergencystretch=3em The literature above depends on a small set of sha
+--- 54135
+fontsize{12}{18}\selectfont\normalfont\setstretch{1.5}\justifying\sloppy\emergencystretch=3em The literature above depends on a small set of shared resources. The TDIL Bengali corpus (Indian Statistical Institute, Kolkata) comprises 3,589,220 words (199,245 distinct) across 85 topical categories, and is 
+--- 54324
+n Statistical Institute, Kolkata) comprises 3,589,220 words (199,245 distinct) across 85 topical categories, and is the most frequently reused text resource. The Bengali WordNet, developed under the same institute's Indradhanush Project, covers approximately 36,534 words but is explicitly documented as i
+--- 55618
+ng {\fontsize{9}{12}\selectfont \setlength{\tabcolsep}{3pt} \begin{tabular}{@{}p{1.90cm} p{3.09cm} p{3.09cm} p{3.09cm} p{3.09cm}@{}} \toprule \textbf{Source} & \textbf{Target Words} & \textbf{Sentences / Documents} & \textbf{Public} & \textbf{Reliability Statistic} \\ \midrule Pal and Saha (2019) & 7 & 2
+--- 60757
+formers (Sections 2.2-2.6), then critically analysed the five obtainable Bangla WSD studies [10, 11, 13, 14, 12] (Section 2.7), the Bangla language resources they depend on (Section 2.8), and the comparative scale of existing datasets (Section 2.9). None of the five studies uses a learned embedding, none
+--- 65975
+this thesis originates from dataset\_updated.xlsx (7,409 rows), compiled specifically for this work rather than adapted from an existing Bangla NLP resource. Each row of the file is one annotated example, described by five fields: word\_id, a numeric identifier of the polysemous target word; target\_word
+--- 66406
+its target word, a property whose consequences Section 3.5 addresses); sense\_gloss, a short Bangla gloss defining that sense; and text, the complete example sentence in which the target word is used in that sense. Table 3.1 reproduces a sample of annotated rows for one representative target word, \bn{জল}, showing 
+--- 66576
+which the target word is used in that sense. Table 3.1 reproduces a sample of annotated rows for one representative target word, \bn{জল}, showing two example sentences for each of its three senses so that the (target\_word, sense\_gloss, text) structure of a row is concrete before the aggregate statistics below. Fi
+--- 66764
+e senses so that the (target\_word, sense\_gloss, text) structure of a row is concrete before the aggregate statistics below. Figure 3.2 then gives a composition overview of the raw corpus along four complementary axes, Figure 3.3 summarises the five-step process by which the corpus was built, from the se
+--- 66996
+ummarises the five-step process by which the corpus was built, from the selection of genuinely polysemous target words through to the final validated collection of sense-labelled sentences, and Table 3.2 reports the resulting corpus-level totals. A larger sample of the corpus file itself, one example sente
+--- 67140
+dated collection of sense-labelled sentences, and Table 3.2 reports the resulting corpus-level totals. A larger sample of the corpus file itself, one example sentence per sense for six representative target words, is reproduced verbatim in Appendix A (Table A.1). Section 3.3 then describes the web annotation platfo
+--- 67510
+tage of Figure 3.3) was actually carried out.\par  } \begin{table}[htbp] \caption{Sample annotated rows for the target word \bn{জল} (word\_id 1), two example sentences per sense.} \label{tab:dataset_sample} \centering {\fontsize{10}{14}\selectfont \begin{tabular}{@{}p{1.4cm} p{3.1cm} p{9.9cm}@{}} \toprule \textbf{S
+--- 67718
+centering {\fontsize{10}{14}\selectfont \begin{tabular}{@{}p{1.4cm} p{3.1cm} p{9.9cm}@{}} \toprule \textbf{Sense ID} & \textbf{Sense Gloss} & \textbf{Example Sentence (text)} \\ \midrule \multirow{2}{*}{1} & \multirow{2}{*}{\bn{অত্যাধিক পরিশ্রম}} & \bn{মাঠে সারাদিন রক্ত জল করা পরিশ্রম করেও কৃষক ন্যায্য মূল্য থেকে ব
+--- 68637
+dlinespace[3pt] \bottomrule \end{tabular}} \end{table} \begin{figure}[htbp] \centering \includegraphics[width=0.92\textwidth]{details/figures/dataset_composition_overview.pdf} \caption{Bangla WSD corpus composition overview: (a) sentences per target word, (b) senses per target word, (c) sentence length, (
+--- 68690
+} \begin{figure}[htbp] \centering \includegraphics[width=0.92\textwidth]{details/figures/dataset_composition_overview.pdf} \caption{Bangla WSD corpus composition overview: (a) sentences per target word, (b) senses per target word, (c) sentence length, (d) sentences per sense-class.} \label{fig:dataset_com
+--- 68843
+position overview: (a) sentences per target word, (b) senses per target word, (c) sentence length, (d) sentences per sense-class.} \label{fig:dataset_composition_overview} \end{figure} {\fontsize{12}{18}\selectfont\normalfont\setstretch{1.5}\justifying\sloppy\emergencystretch=3em Figure 3.2b shows that th
+--- 69334
+ one or two senses, so the typical annotation decision facing an annotator is a three- or four-way choice rather than a binary one, which is itself a source of potential disagreement that motivates the reliability check described in Section 3.3. Sentence allocation across the 181 words is likewise not un
+--- 69544
+ity check described in Section 3.3. Sentence allocation across the 181 words is likewise not uniform (Figure 3.2a): 100 words received the default 40 example sentences and 54 received 30, but 19 higher-frequency words were extended to 80 sentences and one, \bn{ধারা}, to 120, while two placeholder words carry only a
+--- 70023
+ection 3.5). Sentence length is concentrated in the 6-10 word range (4,925 of 7,409 sentences, Figure 3.2c), consistent with the short, single-clause example sentences the annotation guidelines asked contributors to write. Finally, Figure 3.2d shows that the 658 raw (word, sense) classes are already close to balanc
+--- 70703
+}\selectfont\normalfont\setstretch{1.5}\justifying\sloppy\emergencystretch=3em The dataset used throughout this thesis is a custom-built Bangla WSD resource constructed specifically for this research rather than an adaptation of any existing corpus. Its construction followed the five-step process illustr
+--- 71035
+f genuinely polysemous Bangla target words was first selected; the candidate senses of each word were then defined as short Bangla glosses; realistic example sentences were collected for every sense of every word; the material was structured into the five-field spreadsheet format described at the start of this sect
+--- 71058
+Bangla target words was first selected; the candidate senses of each word were then defined as short Bangla glosses; realistic example sentences were collected for every sense of every word; the material was structured into the five-field spreadsheet format described at the start of this section; and, fina
+--- 101864
+ion{Dataset, Annotation, and Reliability Results} {\fontsize{12}{18}\selectfont\normalfont\setstretch{1.5}\justifying\sloppy\emergencystretch=3em The source spreadsheet contains 7,409 sentences across 181 target words and 637 unique sense glosses (3.67 senses/word on average). After the preprocessing of 
+--- 102833
+aw annotated rows themselves is reproduced in Table 3.1 and Appendix A.\par  } \begin{figure}[htbp] \centering \includegraphics[width=0.92\textwidth]{website_images/annotation_admin_panel.pdf} \caption{Administrator dashboard of the web annotation platform.} \label{fig:annotation_admin_panel} \end{figure} 
+--- 120431
+eTuned misclassifies 146 sentences (13.18\% error rate) and mBERT-FineTuned misclassifies 203 (18.32\%). The decisive structural finding comes from decomposing those errors by target word: 145 of BanglaBERT-FineTuned's 146 errors (99.3\%), and 202 of mBERT-FineTuned's 203 (99.5\%), are \emph{within-word} 
+--- 131010
+strict); \draw[arr] (restrict) -- (out); \end{tikzpicture}} \caption{Inference pipeline of the deployed demo application, instantiated for the worked example sentence with target word \bn{কর্ণ}.} \label{fig:illustrative_pipeline} \end{figure} {\fontsize{12}{18}\selectfont\normalfont\setstretch{1.5}\justifying\slopp
+--- 133767
+A horizontal bar chart restates the two confidence scores side by side.\par  } \begin{figure}[htbp] \centering \includegraphics[width=0.92\textwidth]{website_images/new/priliminary.png} \caption{Step 1 of the worked example: the Predict tab at application start-up, with empty input fields and the Model Inf
+--- 134092
+e two auto-selected fine-tuned models.} \label{fig:example_step1} \end{figure} \begin{figure}[htbp] \centering \includegraphics[width=0.92\textwidth]{website_images/new/input_sample.png} \caption{Step 2 of the worked example: the Example Inputs table, from which clicking a row loads a real corpus sentence 
+--- 134403
+its target word into the input fields.} \label{fig:example_step2} \end{figure} \begin{figure}[htbp] \centering \includegraphics[width=0.92\textwidth]{website_images/new/select_sentence.png} \caption{Step 3 of the worked example: the sentence \bn{আয়তক্ষেত্রের কর্ণ দুটি সমান দৈর্ঘ্যের হয়।} and target word 
+--- 134733
+he input fields, ready for prediction.} \label{fig:example_step3} \end{figure} \begin{figure}[htbp] \centering \includegraphics[width=0.92\textwidth]{website_images/new/output.png} \caption{Step 4 of the worked example: both fine-tuned models predict the geometric \emph{diagonal} sense of \bn{কর্ণ} (100.0\
+--- 135870
+sis (Objective 7) established that over 99\% of the strongest models' residual errors are within-word confusions between semantically adjacent, low-resource sense pairs. The two strongest fine-tuned models were deployed in a self-updating demo (Objective 8). The central empirical findings, that Bangla-sp
+--- 137407
+and eliminated; confusion-matrix error analysis showing that over 99\% of the strong models' residual errors are within-word confusions between low-resource, semantically adjacent sense pairs; a global-versus-constrained evaluation quantifying how much of each model's error mass is cross-word; and a live
+--- 138039
+}\selectfont\normalfont\setstretch{1.5}\justifying\sloppy\emergencystretch=3em This thesis produces three original artefacts: the annotation platform source code, the 7,409-sentence annotated corpus, and the trained model checkpoints. The corpus is compiled from example sentences drawn from openly availa
+--- 138152
+l artefacts: the annotation platform source code, the 7,409-sentence annotated corpus, and the trained model checkpoints. The corpus is compiled from example sentences drawn from openly available Bangla reference material and original annotator-composed examples rather than copyrighted literary excerpts, and no per
+--- 138247
+trained model checkpoints. The corpus is compiled from example sentences drawn from openly available Bangla reference material and original annotator-composed examples rather than copyrighted literary excerpts, and no personally identifiable third-party content is embedded in it. The platform and benchmar
+--- 138459
+nd no personally identifiable third-party content is embedded in it. The platform and benchmark code depend exclusively on permissively licensed open-source software (PHP, MySQL, Python, PyTorch, HuggingFace Transformers, scikit-learn, Gradio), and the three pretrained backbones fine-tuned in this work, 
+--- 141205
+ect complies with the licensing terms of every third-party component used: the PHP, MySQL, and Python ecosystems are used under their respective open-source licenses, and the pretrained transformer checkpoints are used and fine-tuned within the terms of their publishers' licenses. No proprietary or acces
+--- 142323
+eakers.\par   \subsection{Health Impact}  The project has no direct health impact; the corpus and models contain no medical content beyond incidental example sentences, and no clinical claim is made or implied.\par   \subsection{Cultural Impact}  The corpus preserves genuine Bangla lexical richness, capturing sense
+--- 142618
+ness, capturing senses of words such as \bn{জল} and \bn{বর্ণ} (Section 1.1) that are often absent or incomplete in existing machine-readable Bangla resources (Section 2.8). Publishing this resource, together with its human-validated reliability statistic, contributes to the documentation of Bangla as a d
+--- 142659
+bn{জল} and \bn{বর্ণ} (Section 1.1) that are often absent or incomplete in existing machine-readable Bangla resources (Section 2.8). Publishing this resource, together with its human-validated reliability statistic, contributes to the documentation of Bangla as a digitally represented language rather than
+--- 146472
+een these parts had no established precedent to follow. \\ \addlinespace[3pt] P5: Extent of applicable codes & Constrained by dataset licensing, open-source software licenses (Section 5.4), and research-ethics norms for human annotation (Section 5.2). \\ \addlinespace[3pt] P6: Extent of stakeholder invol
+--- 147814
+selectfont \begin{tabular}{@{}p{4.20cm} p{10.50cm}@{}} \toprule \textbf{Attribute} & \textbf{How This Thesis Satisfies It} \\ \midrule A1: Range of resources & PHP/MySQL web stack, Python/PyTorch/HuggingFace ML stack, a cloud GPU, human annotators, and pretrained multilingual and Bangla-specific language
+--- 151980
+ne-tuned models were deployed in a self-updating Gradio application. Taken together, this thesis contributes a reusable, human-validated Bangla WSD resource and what appears to be the first systematic comparison of classical, deep-learning, and transformer-based approaches to Bangla word sense disambigua
+--- 155193
+lts reported here.   \item Apply few-shot or meta-learning approaches to the under-represented senses identified in Section 4.6 as the dominant error source.   \item Extend the corpus beyond 181 target words and beyond two annotators, with a second Cohen's-Kappa round to confirm reliability holds as the 
+--- 157466
+{Proc.\ ACL}, 2020.  \bibitem{bhattacharjee2022banglabert} A.~Bhattacharjee et al., ``BanglaBERT: Language Model Pretraining and Benchmarks for Low-Resource Language Understanding Evaluation in Bangla,'' in \textit{Findings of NAACL}, 2022.  \bibitem{cohen1960kappa} J.~Cohen, ``A Coefficient of Agreement
+--- 159791
+etch=3em This appendix reproduces a verbatim sample of the corpus file dataset\_updated.xlsx described in Section 3.2, so that the structure of the resource contributed by this thesis can be inspected directly. The full file contains 7,409 rows, each carrying five fields: word\_id (numeric identifier of 
+--- 160187
+ense assigned to that occurrence, unique only within its target word), sense\_gloss (a short Bangla gloss defining the sense), and text (the complete example sentence in which the target word is used in that sense). Table A.1 lists one example sentence per sense for six representative target words, chosen because e
+--- 160273
+ short Bangla gloss defining the sense), and text (the complete example sentence in which the target word is used in that sense). Table A.1 lists one example sentence per sense for six representative target words, chosen because each is discussed in the body of the thesis: \bn{বর্ণ} and \bn{হাত} are the cross-word 
+--- 161031
+ctfont \begin{longtable}{@{}p{2.3cm} p{1.1cm} p{3.0cm} p{7.4cm}@{}} \caption{Verbatim sample of the Bangla WSD corpus file dataset\_updated.xlsx: one example sentence per sense for six representative target words.} \label{tab:appendix_dataset_sample}\\ \toprule \textbf{Target Word (word\_id)} & \textbf{Sense ID} & 
+--- 161228
+ve target words.} \label{tab:appendix_dataset_sample}\\ \toprule \textbf{Target Word (word\_id)} & \textbf{Sense ID} & \textbf{Sense Gloss} & \textbf{Example Sentence (text)} \\ \midrule \endfirsthead \multicolumn{4}{@{}l}{\itshape Table \thetable{} (continued)}\\[3pt] \toprule \textbf{Target Word (word\_id)} & \te
+--- 161442
+4}{@{}l}{\itshape Table \thetable{} (continued)}\\[3pt] \toprule \textbf{Target Word (word\_id)} & \textbf{Sense ID} & \textbf{Sense Gloss} & \textbf{Example Sentence (text)} \\ \midrule \endhead \midrule \multicolumn{4}{r@{}}{\itshape continued on next page}\\ \endfoot \bottomrule \endlastfoot \bn{বর্ণ} (3) & 1 & 

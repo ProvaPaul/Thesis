@@ -1,0 +1,29 @@
+\noindent \makebox [\WSDlotlabelw ][l]{\textbf {Figure No.}}\makebox [\dimexpr \linewidth -\WSDlotlabelw -\WSDlotpagew \relax ][c]{\textbf {Description}}\makebox [\WSDlotpagew ][r]{\textbf {Page}}\par \vspace {12pt}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Gantt chart of the thesis work plan.}}{6}{figure.caption.5}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Overall system architecture of the proposed Bangla WSD framework.}}{19}{figure.caption.14}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Bangla WSD corpus composition overview: (a) sentences per target word, (b) senses per target word, (c) sentence length, (d) sentences per sense-class.}}{21}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Five-step Bangla dataset creation process.}}{22}{figure.caption.17}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Workflow of the web annotation platform.}}{23}{figure.caption.19}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Rows remaining after each preprocessing step.}}{25}{figure.caption.22}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Shared transformer classification head, applied identically on top of all three fine-tuned backbones.}}{28}{figure.caption.24}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Administrator dashboard of the web annotation platform.}}{34}{figure.caption.27}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Cohen's Kappa and raw accuracy per annotator.}}{34}{figure.caption.28}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Test accuracy of all 29 experiments on the shared fixed split, sorted descending.}}{36}{figure.caption.29}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Macro F1 of all 29 experiments on the shared fixed split, sorted descending.}}{38}{figure.caption.31}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Heatmap of accuracy and macro/weighted precision, recall, and F1 for all 29 experiments, embeddings and classifiers as rows, metrics as columns.}}{39}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Training curves of BanglaBERT-FineTuned: loss falls to near zero while validation accuracy climbs to 88.80\%.}}{41}{figure.caption.35}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Training curves of XLM-R-FineTuned: loss plateaus at the 657-class random-guessing level (\(\ln 657 \approx 6.49\)) and validation accuracy never exceeds 0.18\%.}}{42}{figure.caption.36}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Global versus target-word-constrained weighted F1 for all 29 experiments: weak configurations gain dramatically from the restriction while strong configurations are nearly unchanged.}}{44}{figure.caption.38}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Inference pipeline of the deployed demo application, instantiated for the worked example sentence with target word {\bengalifont কর্ণ}.}}{46}{figure.caption.40}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Step 1 of the worked example: the Predict tab at application start-up, with empty input fields and the Model Info panel listing the two auto-selected fine-tuned models.}}{47}{figure.caption.41}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Step 2 of the worked example: the Example Inputs table, from which clicking a row loads a real corpus sentence and its target word into the input fields.}}{48}{figure.caption.42}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Step 3 of the worked example: the sentence {\bengalifont আয়তক্ষেত্রের কর্ণ দুটি সমান দৈর্ঘ্যের হয়।} and target word {\bengalifont কর্ণ} loaded into the input fields, ready for prediction.}}{48}{figure.caption.43}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Step 4 of the worked example: both fine-tuned models predict the geometric \emph {diagonal} sense of {\bengalifont কর্ণ} (100.0\% and 99.7\% confidence), with the three competing senses receiving near-zero probability in the Top-5 tables.}}{49}{figure.caption.44}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsfinish 

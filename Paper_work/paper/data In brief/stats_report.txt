@@ -1,0 +1,148 @@
+======================================================================
+WSD DATASET -- STATISTICAL ANALYSIS
+Source file: C:\xampp\htdocs\Thesis\Paper_work\paper\wsd_dataset.xlsx
+======================================================================
+
+[Shape] rows=12059, cols=5
+[Columns] ['word_id', 'target_word', 'sense_id', 'sense_gloss', 'text']
+[Dtypes]
+word_id         int64
+target_word    object
+sense_id        int64
+sense_gloss    object
+text           object
+
+[Missing values per column]
+word_id        0
+target_word    0
+sense_id       0
+sense_gloss    0
+text           0
+[Total missing cells] 0
+
+[Duplicate full rows] rows involved=0, extra copies beyond first=0
+[Duplicate 'text' values] rows involved=16, extra copies beyond first=8
+
+[Unique target_word strings] 402
+[Unique word_id values] 421  (word_id counts word-entries; a word string can have >1 entry if re-used with a separate sense inventory)
+[target_word strings mapped to >1 word_id] 20
+target_word
+আলোচ্য    2
+কক্ষ      2
+কণ্ঠ      2
+কূল       2
+গতি       2
+চক্র      2
+চর        2
+জোয়ার    2
+তরঙ্গ     2
+ধারা      3
+বাঁধ      2
+ভাটা      2
+ভাষা      2
+মঞ্চ      2
+মুখোশ     2
+রথ        2
+রাশি      2
+রূপ       2
+সুর       2
+সূত্র     2
+
+[Unique sense_gloss strings (raw text, may repeat across words)] 1085
+[Unique (target_word, sense_gloss) pairs] 1129
+[Unique (word_id, sense_id) pairs -- word-entry-specific classes] 1205
+
+[Senses per word_id] min=2, max=4, mean=2.862, median=3.0
+[Distribution: number of word entries by sense count]
+sense_id
+2    202
+3     75
+4    144
+
+[Examples (sentences) per target_word] min=1, max=120, mean=29.998, median=20.0
+
+[Examples per (word_id, sense_id) class] min=9, max=20, mean=10.007, median=10.0
+[Distribution: number of classes by example count]
+9        1
+10    1203
+20       1
+
+[Rows where target_word does NOT appear verbatim in text] 874
+
+[Sentence length in whitespace-separated tokens] min=3, max=28, mean=8.767, median=7.0, std=4.200
+[Sentence length in characters] min=13, max=165, mean=54.059, median=45.0, std=27.675
+
+[Sentence length histogram (tokens -> count)]
+_word_len
+3       10
+4      249
+5     1282
+6     2348
+7     2340
+8     1778
+9     1193
+10     663
+11     332
+12     186
+13      94
+14      94
+15      99
+16     167
+17     226
+18     248
+19     241
+20     215
+21     135
+22      79
+23      49
+24      18
+25       9
+26       1
+27       2
+28       1
+
+[Top 20 target words by example count]
+target_word
+ধারা      120
+সূত্র      80
+রূপ        80
+আলোচ্য     80
+কক্ষ       80
+সুর        80
+গতি        80
+মুখোশ      80
+কূল        80
+রথ         80
+রাশি       80
+চক্র       80
+ভাষা       80
+তরঙ্গ      80
+ভাটা       80
+বাঁধ       80
+জোয়ার     80
+চর         80
+মঞ্চ       80
+কণ্ঠ       80
+
+[Bottom 20 target words by example count]
+target_word
+রানī       1
+নদī        1
+উঁচু      20
+হাসি      20
+কচ্ছপ     20
+কড়ি      20
+কপাল      20
+আসা       20
+সরু       20
+সাজা      20
+সাদা      20
+সাপ       20
+সিঁড়ি    20
+সিংহ      20
+সীমা      20
+এঁটে      20
+লহরি      20
+লেখা      20
+লেজ       20
+শক্ত      20

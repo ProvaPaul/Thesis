@@ -1,0 +1,57 @@
+\begin{thebibliography}{1}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{bangla_wsd_dataset}
+P.~R. Paul, K.~M.~A. Hasan, A sense-annotated dataset for {B}angla word sense
+  disambiguation, Data repository, [PUBLIC DATA REPOSITORY / DOI TO BE ADDED
+  BEFORE SUBMISSION] (2025).
+
+\bibitem{paulhasan2025banglawsdbenchmark}
+P.~R. Paul, K.~M.~A. Hasan, Bangla word sense disambiguation: A large-scale
+  benchmark of embedding and classifier combinations, related research article,
+  manuscript; publication venue and DOI [TO BE CONFIRMED]. Describes the
+  annotation platform, dictionary-based sense validation, Cohen's kappa
+  reliability study, and the 29-experiment benchmark built on a
+  filtered/relabeled derivative of the dataset described in this article
+  (2025).
+
+\bibitem{bhattacharjee2022banglabert}
+A.~Bhattacharjee, T.~Hasan, W.~U. Ahmad, K.~S. Mubasshir, M.~S. Islam,
+  A.~Iqbal, M.~S. Rahman, R.~Shahriyar, {BanglaBERT}: Language model
+  pretraining and benchmarks for low-resource language understanding evaluation
+  in {B}angla, in: Findings of the Association for Computational Linguistics:
+  NAACL, 2022, pp. 1318--1327.
+
+\bibitem{devlin2019bert}
+J.~Devlin, M.-W. Chang, K.~Lee, K.~Toutanova, {BERT}: Pre-training of deep
+  bidirectional transformers for language understanding, in: Proceedings of
+  NAACL-HLT, 2019, pp. 4171--4186.
+
+\bibitem{conneau2020xlmr}
+A.~Conneau, K.~Khandelwal, N.~Goyal, V.~Chaudhary, G.~Wenzek, F.~Guzm{\'a}n,
+  E.~Grave, M.~Ott, L.~Zettlemoyer, V.~Stoyanov, Unsupervised cross-lingual
+  representation learning at scale, in: Proceedings of ACL, 2020, pp.
+  8440--8451.
+
+\bibitem{dasdawn2023}
+D.~Das~Dawn, A.~Khan, S.~H. Shaikh, R.~K. Pal, A dataset for evaluating
+  {B}engali word sense disambiguation techniques, Journal of Ambient
+  Intelligence and Humanized Computing 14 (2023) 4057--4086.
+
+\bibitem{biswas2004sansad}
+S.~Biswas, Samsad Bangla Abhidhan (Dictionary of the Bengali Language), 7th
+  Edition, Sahitya Samsad, Kolkata, 2004.
+
+\bibitem{cohen1960kappa}
+J.~Cohen, A coefficient of agreement for nominal scales, Educational and
+  Psychological Measurement 20~(1) (1960) 37--46.
+
+\bibitem{landis1977kappa}
+J.~R. Landis, G.~G. Koch, The measurement of observer agreement for categorical
+  data, Biometrics 33~(1) (1977) 159--174.
+
+\end{thebibliography}

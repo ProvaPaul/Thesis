@@ -1,0 +1,91 @@
+\relax 
+\citation{ide1998wsd,navigli2009wsd}
+\citation{nazah2017,kaysarkhan2018,sahamoumittra2019,palsaha2019,dasdawn2023}
+\citation{dasdawn2023}
+\citation{cohen1960kappa,landis1977kappa}
+\citation{mikolov2013word2vec}
+\citation{bojanowski2017fasttext}
+\citation{devlin2019bert}
+\citation{bhattacharjee2022banglabert}
+\citation{conneau2020xlmr}
+\citation{navigli2009wsd}
+\citation{mikolov2013word2vec,bojanowski2017fasttext}
+\citation{devlin2019bert}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Word Sense Disambiguation}{1}{}\protected@file@percent }
+\citation{nazah2017}
+\citation{kaysarkhan2018}
+\citation{sahamoumittra2019}
+\citation{palsaha2019}
+\citation{dasdawn2023}
+\citation{dasdawn2023}
+\citation{cohen1960kappa}
+\citation{landis1977kappa}
+\citation{landis1977kappa}
+\citation{landis1977kappa}
+\citation{palsaha2019}
+\citation{nazah2017}
+\citation{sahamoumittra2019}
+\citation{kaysarkhan2018}
+\citation{dasdawn2023}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Bangla WSD}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {III}The Bangla WSD Corpus}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Collection and Annotation}{2}{}\protected@file@percent }
+\newlabel{eq:kappa}{{1}{2}{}{equation.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Per-annotator Cohen's kappa and raw accuracy against the gold senses; the dashed line is the 0.81 ``almost perfect'' threshold \cite  {landis1977kappa}.}}{2}{}\protected@file@percent }
+\newlabel{fig:kappa}{{1}{2}{}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Preprocessing and Label Construction}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Target Marking and Data Split}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Benchmark Methodology}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Text Representations}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}1}TF-IDF}{2}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Snapshot of the proposed Bangla WSD dataset.}}{3}{}\protected@file@percent }
+\newlabel{tab:sample}{{I}{3}{}{table.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Composition of the raw corpus: (a) sentences authored per word entry, (b) candidate senses per word entry, (c) sentence-length distribution, and (d) sentences per word--sense class. Twenty target words are entered twice with separate sense inventories, giving 421 word entries over the 402 unique target words.}}{3}{}\protected@file@percent }
+\newlabel{fig:datasetstats}{{2}{3}{}{figure.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Comparison of existing Bangla WSD datasets with the proposed corpus.}}{3}{}\protected@file@percent }
+\newlabel{tab:dataset}{{II}{3}{}{table.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}2}Pretrained static embeddings}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}3}Frozen transformer embeddings}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Classifier Grid and Sequence Models}{3}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Complete list of ambiguous target words in the proposed dataset, each with its number of candidate senses.}}{4}{}\protected@file@percent }
+\newlabel{tab:words}{{III}{4}{}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Transformer Fine-Tuning}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-D}}Evaluation Protocol}{4}{}\protected@file@percent }
+\newlabel{eq:constrained}{{2}{4}{}{equation.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Results and Discussion}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Overall Benchmark}{4}{}\protected@file@percent }
+\citation{sahamoumittra2019}
+\citation{nazah2017,dasdawn2023}
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Performance of all 29 embedding--classifier combinations on the held-out test split (1,673 sentences, global evaluation over all 1,048 classes). All values except MCC in \%.}}{5}{}\protected@file@percent }
+\newlabel{tab:main}{{IV}{5}{}{table.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Test accuracy of all 29 embedding--classifier configurations under the global 1,048-class evaluation. Transformer-based representations dominate, with fine-tuned BanglaBERT best overall.}}{5}{}\protected@file@percent }
+\newlabel{fig:acc}{{3}{5}{}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Training and validation loss/accuracy curves for fine-tuned BanglaBERT. The best-validation checkpoint is restored before the final test evaluation.}}{5}{}\protected@file@percent }
+\newlabel{fig:curves}{{4}{5}{}{figure.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Effect of target-word-constrained inference on test accuracy (\%) for representative models.}}{5}{}\protected@file@percent }
+\newlabel{tab:constrained}{{V}{5}{}{table.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Fine-Tuning versus Frozen Features}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Global versus Target-Word-Constrained Evaluation}{5}{}\protected@file@percent }
+\bibcite{ide1998wsd}{1}
+\bibcite{navigli2009wsd}{2}
+\bibcite{mikolov2013word2vec}{3}
+\bibcite{bojanowski2017fasttext}{4}
+\bibcite{devlin2019bert}{5}
+\bibcite{conneau2020xlmr}{6}
+\bibcite{bhattacharjee2022banglabert}{7}
+\bibcite{cohen1960kappa}{8}
+\bibcite{landis1977kappa}{9}
+\bibcite{nazah2017}{10}
+\bibcite{kaysarkhan2018}{11}
+\bibcite{sahamoumittra2019}{12}
+\bibcite{palsaha2019}{13}
+\bibcite{dasdawn2023}{14}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Global versus target-word-constrained weighted F1 for all 29 configurations. Weak models close most of their gap under the constraint; strong models are nearly unchanged.}}{6}{}\protected@file@percent }
+\newlabel{fig:constrained}{{5}{6}{}{figure.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-D}}Comparison with Prior Bangla WSD Work}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-E}}Limitations}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusion}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{6}{}\protected@file@percent }
+\gdef \@abspage@last{6}
